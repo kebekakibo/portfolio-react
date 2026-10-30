@@ -556,3 +556,118 @@ nav a:focus-visible {
   outline-offset: 4px;
   border-radius: 5px;
 }
+
+/* Contact form layout */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  margin: 28px auto;
+  text-align: left;
+}
+
+/* Form labels */
+.contact-form label {
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Text fields */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  color: #f1f5f9;
+  background: #101827;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Placeholder text */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #8492a6;
+}
+
+/* Highlight a field when selected */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+}
+
+/* Message field */
+.contact-form textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+/* Submit button */
+.contact-submit {
+  align-self: flex-start;
+  margin-top: 12px;
+  padding: 12px 22px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 9px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.contact-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.contact-submit:active {
+  transform: translateY(0);
+}
+
+.contact-submit:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 4px;
+}
+
+/* Fit the form on smaller screens */
+@media (max-width: 550px) {
+  .contact-form {
+    max-width: 100%;
+  }
+
+  .contact-submit {
+    width: 100%;
+  }
+}
+/* Contact form feedback */
+.submission-message {
+  max-width: 560px;
+  margin: 18px auto;
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.success-message {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.error-message {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}

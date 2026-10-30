@@ -5,7 +5,57 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  
+  const [contactData, setContactData] = useState({
+  name: '',
+  email: '',
+  message: ''
+})
+const [isSubmitting, setIsSubmitting] = useState(false)
+const [submissionMessage, setSubmissionMessage] = useState('')
+
+const handleContactSubmit = async (event) => {
+  event.preventDefault()
+
+  setIsSubmitting(true)
+  setSubmissionMessage('')
+
+  try {
+    const response = await fetch(
+      'https://portfolio-backend-089l.onrender.com/api/contacts',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contactData)
+      }
+    )
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to send message.')
+    }
+
+    setSubmissionMessage('Your message was sent successfully!')
+
+    setContactData({
+      name: '',
+      email: '',
+      message: ''
+    })
+
+  } catch (error) {
+    console.error('Error sending message:', error)
+    setSubmissionMessage(
+      error.message || 'Something went wrong. Please try again.'
+    )
+
+  } finally {
+    setIsSubmitting(false)
+  }
+}
+
   const [searchTerm, setSearchTerm] = useState("")
 
 
@@ -32,7 +82,11 @@ const projects = [
 
 const filteredProjects = projects.filter((project) => {
   const searchText = searchTerm.toLowerCase()
-
+const [contactData, setContactData] = useState({
+  name: '',
+  email: '',
+  message: ''
+})
   return (
     project.title.toLowerCase().includes(searchText) ||
     project.description.toLowerCase().includes(searchText) ||
@@ -117,21 +171,87 @@ const filteredProjects = projects.filter((project) => {
           
         </div>
        
+
 <section className="contact-section" id="contact">
   <p className="section-label">GET IN TOUCH</p>
   <h2>Let's connect.</h2>
   <p>
-    Interested in my work? Visit my GitHub profile to see my projects.
+    Have a question or want to work together? Send me a message.
   </p>
-  <a
-    className="contact-link"
-    href="https://github.com/kebekakibo"
-    target="_blank"
-    rel="noreferrer"
+
+ <form className="contact-form" onSubmit={handleContactSubmit}>
+    <label htmlFor="contact-name">Your name</label>
+    <input
+  id="contact-name"
+  name="name"
+  type="text"
+  placeholder="Enter your name"
+  value={contactData.name}
+  onChange={(event) =>
+    setContactData({
+      ...contactData,
+      name: event.target.value
+    })
+  }
+  required
+/>
+
+    <label htmlFor="contact-email">Your email</label>
+    <input
+  id="contact-email"
+  name="email"
+  type="email"
+  placeholder="you@example.com"
+  value={contactData.email}
+  onChange={(event) =>
+    setContactData({
+      ...contactData,
+      email: event.target.value
+    })
+  }
+  required
+/>
+
+    <label htmlFor="contact-message">Your message</label>
+    <textarea
+  id="contact-message"
+  name="message"
+  placeholder="Write your message..."
+  rows="5"
+  value={contactData.message}
+  onChange={(event) =>
+    setContactData({
+      ...contactData,
+      message: event.target.value
+    })
+  }
+  required
+/>
+
+    <button
+  type="submit"
+  className="contact-submit"
+  disabled={isSubmitting}
+>
+  {isSubmitting ? 'Sending...' : 'Send Message'}
+</button>
+  </form>
+ {submissionMessage && (
+  <p
+    className={`submission-message ${
+      submissionMessage.includes('successfully')
+        ? 'success-message'
+        : 'error-message'
+    }`}
+    role="status"
+    aria-live="polite"
   >
-    Visit my GitHub
-  </a>
+    {submissionMessage}
+  </p>
+)}
+ 
 </section>
+
 
       </section>
 
